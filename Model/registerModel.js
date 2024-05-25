@@ -86,6 +86,23 @@ const registerUser = new mongoose.Schema(
   }
 );
 
+const saltRounds = 10;
+
+registerUser.pre("save", async function (next) {
+  if (this.isModified("password")) {
+    try {
+      const hashedPassword = await bcrypt.hash(this.password, saltRounds);
+      this.password = hashedPassword;
+      next();
+    } catch (err) {
+      console.error("Error hashing password:", err);
+      next(err); // Propagate the error to the next middleware or route handler
+    }
+  } else {
+    next();
+  }
+});
+
 const registerSchema = mongoose.model("register", registerUser);
 
 module.exports = { registerSchema };
