@@ -131,7 +131,7 @@ module.exports.userLogin = async (req, res) => {
     }
   } catch (error) {
     // Handle any errors that occur during the process
-    console.error(error);
+    console.error("Error", error);
     res.status(500).json({ message: "Server error" });
   }
 };
