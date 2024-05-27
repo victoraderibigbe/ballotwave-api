@@ -74,6 +74,7 @@ module.exports.registerUsers = async (req, res) => {
     console.log(err);
   }
 };
+<<<<<<< HEAD
 
 // module.exports.userLogin = (req, res) => {
 //   console.log(req.body);
@@ -135,3 +136,5 @@ module.exports.userLogin = async (req, res) => {
     res.status(500).json({ message: "Server error" });
   }
 };
+=======
+>>>>>>> 36a4edf4800dad3b4d38238aa51539f01f97019c
