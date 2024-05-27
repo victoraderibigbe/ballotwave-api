@@ -3,7 +3,7 @@ const jwt = require("jsonwebtoken");
 const { registerSchema } = require("../Model/registerModel");
 
 module.exports.landing = (req, res) => {
-  res.send("Rest, no routes for you 😎😎😎...");
+  res.send("Rest, No Routes for you 😎😎😎...");
 };
 
 module.exports.registerUsers = async (req, res) => {
