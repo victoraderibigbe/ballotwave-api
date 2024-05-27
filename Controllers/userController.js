@@ -19,7 +19,9 @@ module.exports.registerUsers = async (req, res) => {
     nationality,
     stateOfOrigin,
     lgaOfOrigin,
+    countryOfResidence,
     stateOfResidence,
+    lgaOfResidence,
     token,
     password,
   } = req.body;
@@ -36,7 +38,7 @@ module.exports.registerUsers = async (req, res) => {
     if (user) {
       console.log("User with credentials found");
 
-      res.send({ message: "User with credentials found" });
+      res.status(400).json({ message: "User already exists" });
     } else {
       console.log("Not found", req.body.nin.length);
 
@@ -58,7 +60,9 @@ module.exports.registerUsers = async (req, res) => {
           nationality,
           stateOfOrigin,
           lgaOfOrigin,
+          countryOfResidence,
           stateOfResidence,
+          lgaOfResidence,
           token,
           password,
         });
@@ -74,10 +78,6 @@ module.exports.registerUsers = async (req, res) => {
     console.log(err);
   }
 };
-
-// module.exports.userLogin = (req, res) => {
-//   console.log(req.body);
-// };
 
 module.exports.userLogin = async (req, res) => {
   const { votersId, password } = req.body;
@@ -114,7 +114,9 @@ module.exports.userLogin = async (req, res) => {
           nationality: user.nationality,
           stateOfOrigin: user.stateOfOrigin,
           lgaOfOrigin: user.lgaOfOrigin,
+          countryOfResidence: user.countryOfResidence,
           stateOfResidence: user.stateOfResidence,
+          lgaOfResidence: user.lgaOfResidence,
         };
 
         const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, {
