@@ -1,0 +1,13 @@
+{
+	"folders": [
+		{
+			"name": "ballotwave-api",
+			"path": ".."
+		},
+		{
+			"name": "middlewares",
+			"path": "../../../SQI/All my school work/Coupon Web/Backend/middlewares"
+		}
+	],
+	"settings": {}
+}
