@@ -80,20 +80,20 @@ module.exports.registerUsers = async (req, res) => {
 // };
 
 module.exports.userLogin = async (req, res) => {
-  const { email, password } = req.body;
+  const { votersId, password } = req.body;
   console.log(req.body);
 
   try {
     const user = await registerSchema
-      .findOne({ email })
+      .findOne({ votersCardNumber: votersId })
       .select(
         "+firstName +lastName +email +phoneNumber +votersCardNumber +nin +age +nationality +stateOfOrigin +lgaOfOrigin +stateOfResidence +token +password"
       );
 
     if (!user) {
       // User with the provided email does not exist
-      console.log("Invalid Email");
-      res.send("Invalid email");
+      console.log("Invalid votersId");
+      res.send("Invalid votersId");
     } else {
       // Compare the provided password with the hashed password stored in the database
       const passwordMatch = await bcrypt.compare(password, user.password);
