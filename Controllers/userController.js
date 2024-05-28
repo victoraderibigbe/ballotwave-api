@@ -3,7 +3,7 @@ const jwt = require("jsonwebtoken");
 const { registerSchema } = require("../Model/registerModel");
 
 module.exports.landing = (req, res) => {
-  res.send("Rest, No Routes for you 😎😎😎...");
+  res.send("Rest, No Route for you 😎😎😎...");
 };
 
 module.exports.registerUsers = async (req, res) => {
@@ -36,17 +36,16 @@ module.exports.registerUsers = async (req, res) => {
     });
 
     if (user) {
-      console.log("User with credentials found");
-
+      console.log("User already exists");
       res.status(400).json({ message: "User already exists" });
     } else {
       console.log("Not found", req.body.nin.length);
 
       if (req.body.nin.length !== 11) {
-        console.log("NIN length is less than or greater than 11");
+        console.log("NIN length is less or greater than 11");
 
         res.send({
-          message: "The NIN length is less than or greater than 11",
+          message: "The NIN length is less or greater than 11",
         });
       } else {
         const newUser = new registerSchema({
@@ -68,9 +67,8 @@ module.exports.registerUsers = async (req, res) => {
         });
 
         await newUser.save().then(async (response) => {
-          console.log({ message: "Successfully signed up", response });
-          // You can send a response or perform other actions as needed
-          res.send({ message: "Successfully signed up", status: true });
+          console.log({ message: "Registration Successful", response });
+          res.send({ message: "Registration Successful", status: true });
         });
       }
     }
@@ -87,20 +85,20 @@ module.exports.userLogin = async (req, res) => {
     const user = await registerSchema
       .findOne({ votersCardNumber: votersId })
       .select(
-        "+firstName +lastName +email +phoneNumber +votersCardNumber +nin +age +nationality +stateOfOrigin +lgaOfOrigin +stateOfResidence +token +password"
+        "+firstName +lastName +email +phoneNumber +votersCardNumber +nin +age +nationality +stateOfOrigin +lgaOfOrigin +countryOfResidence +stateOfResidence +lgaOfResidence +token +password"
       );
 
     if (!user) {
       // User with the provided email does not exist
       console.log("Invalid votersId");
-      res.send("Invalid votersId");
+      res.status(400).send("Invalid votersId");
     } else {
       // Compare the provided password with the hashed password stored in the database
       const passwordMatch = await bcrypt.compare(password, user.password);
       if (!passwordMatch) {
         // Passwords do not match
         console.log("Invalid Password");
-        res.send("Invalid password");
+        res.status(400).send("Invalid password");
       } else {
         // Passwords match, login successful
         const newUser = {
@@ -128,7 +126,7 @@ module.exports.userLogin = async (req, res) => {
         });
 
         console.log(newUser, token);
-        res.json({ message: "Login successfully", newUser, token });
+        res.status(200).json({ message: "Login successful", newUser, token });
       }
     }
   } catch (error) {
