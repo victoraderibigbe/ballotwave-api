@@ -44,7 +44,7 @@ module.exports.voteNow = async (req, res) => {
 
 // TO COUNT VOTES
 module.exports.countVote = async (req, res) => {
-  const { votersName, votersCode, candidateName, partyName } = req.body;
+  const { votersName, votersCode } = req.body;
 
   try {
     const validateVoters = voters.find(
