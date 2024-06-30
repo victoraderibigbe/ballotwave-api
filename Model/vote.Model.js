@@ -20,6 +20,6 @@ const candidateSchema = new mongoose.Schema(
   }
 );
 
-const Candidate = mongoose.model("Candidate", candidateSchema);
+const vote = mongoose.model("voteModel", candidateSchema);
 
-module.exports = { Candidate };
+module.exports = { vote };
