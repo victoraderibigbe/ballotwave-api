@@ -45,6 +45,7 @@ module.exports.voteNow = async (req, res) => {
 // TO COUNT VOTES
 module.exports.countVote = async (req, res) => {
   const { votersName, votersCode } = req.body;
+  // console.log(req.body);
 
   try {
     const validateVoters = voters.find(
@@ -60,15 +61,24 @@ module.exports.countVote = async (req, res) => {
 
       const getVote = await vote.find({});
       // console.log(getVote);
+
+      const userVotedFor = await vote.findOne({ votersName });
+
+      console.log("userVotedFor", userVotedFor);
       const APC = getVote.filter((item) => item.partyName === "APC");
       console.log("APC", APC.length);
 
       const PDP = getVote.filter((item) => item.partyName === "PDP");
       console.log("PDP", PDP.length);
 
+      const LP = getVote.filter((item) => item.partyName === "LP");
+      console.log("LP", LP.length);
+
       const data = {
         APC: APC.length,
         PDP: PDP.length,
+        LP: LP.length,
+        votedFor: userVotedFor.candidateName,
       };
       console.log(data);
       console.log("Voters Found");
